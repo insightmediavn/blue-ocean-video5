@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blue Ocean Keyword Extractor</title>
+</head>
+<body>
+  <h2>Paste Video Script</h2>
+  <textarea id="scriptInput" rows="10" cols="50"></textarea><br>
+  <button onclick="sendScript()">Extract Keywords</button>
+  <pre id="result"></pre>
+  <script>
+    async function sendScript() {
+      const scriptContent = document.getElementById('scriptInput').value;
+      const res = await fetch('/api/process-script', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scriptContent })
+      });
+      const data = await res.json();
+      document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
